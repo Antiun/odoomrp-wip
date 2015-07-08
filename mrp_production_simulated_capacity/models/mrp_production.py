@@ -15,23 +15,19 @@
 #    along with this program.  If not, see http://www.gnu.org/licenses/.
 #
 ##############################################################################
-{
-    "name": "MRP Production Capacity",
-    "version": "1.0",
-    "author": "OdooMRP team,"
-              "AvanzOSC,"
-              "Serv. Tecnol. Avanzados - Pedro M. Baeza",
-    "website": "http://www.odoomrp.com",
-    "contributors": [
-        "Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>",
-        "Ana Juaristi <anajuaristi@avanzosc.es>",
-        "Alfredo de la Fuente <alfredodelafuente@avanzosc.es>",
-    ],
-    "category": "Manufacturing",
-    "depends": ['mrp',
-                ],
-    "data": ['wizard/wiz_split_production_view.xml',
-             'views/mrp_view.xml',
-             ],
-    "installable": True
-}
+
+from openerp import models, api
+
+
+class MrpProduction(models.Model):
+
+    _inherit = 'mrp.production'
+
+    @api.multi
+    def _get_min_qty_for_production(self, routing=False):
+        qty = super(MrpProduction, self)._get_min_qty_for_production(routing)
+        min_capacity = routing and max(routing.workcenter_lines.filtered(
+            'limited_production_capacity').mapped('workcenter_id.'
+                                                  'capacity_per_cycle_min')
+            ) or 0
+        return max(qty, min_capacity)

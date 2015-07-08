@@ -15,23 +15,24 @@
 #    along with this program.  If not, see http://www.gnu.org/licenses/.
 #
 ##############################################################################
+
 {
-    "name": "MRP Production Capacity",
+    "name": "MRP Simulated Production Capacity",
     "version": "1.0",
     "author": "OdooMRP team,"
               "AvanzOSC,"
               "Serv. Tecnol. Avanzados - Pedro M. Baeza",
-    "website": "http://www.odoomrp.com",
     "contributors": [
+        "Ainara Galdona <ainaragaldona@avanzosc.es>",
         "Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>",
-        "Ana Juaristi <anajuaristi@avanzosc.es>",
-        "Alfredo de la Fuente <alfredodelafuente@avanzosc.es>",
-    ],
+        "Ana Juaristi <ajuaristio@gmail.com>",
+        ],
     "category": "Manufacturing",
-    "depends": ['mrp',
+    "website": "http://www.odoomrp.com",
+    "depends": ['mrp_production_project_estimated_cost',
+                'mrp_production_capacity'
                 ],
-    "data": ['wizard/wiz_split_production_view.xml',
-             'views/mrp_view.xml',
-             ],
-    "installable": True
+    "data": [],
+    "installable": True,
+    "auto_install": True
 }

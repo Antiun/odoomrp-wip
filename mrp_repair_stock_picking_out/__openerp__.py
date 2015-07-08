@@ -1,3 +1,4 @@
+
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
@@ -11,27 +12,23 @@
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 #
-#    You should have received a copy of the GNU Affero General Public License
+#    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see http://www.gnu.org/licenses/.
 #
 ##############################################################################
+
 {
-    "name": "MRP Production Capacity",
-    "version": "1.0",
-    "author": "OdooMRP team,"
-              "AvanzOSC,"
-              "Serv. Tecnol. Avanzados - Pedro M. Baeza",
-    "website": "http://www.odoomrp.com",
-    "contributors": [
-        "Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>",
-        "Ana Juaristi <anajuaristi@avanzosc.es>",
-        "Alfredo de la Fuente <alfredodelafuente@avanzosc.es>",
-    ],
-    "category": "Manufacturing",
-    "depends": ['mrp',
-                ],
-    "data": ['wizard/wiz_split_production_view.xml',
-             'views/mrp_view.xml',
+    'name': 'MRP repair stock picking out',
+    'version': '1.0',
+    'author': 'OdooMRP team',
+    'contributors': ["Daniel Campos <danielcampos@avanzosc.es>",
+                     "Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>",
+                     "Ana Juaristi <ajuaristio@gmail.com>"],
+    'website': 'http://www.odoomrp.com',
+    "depends": ['mrp_repair'],
+    "category": "Generic Modules",
+    "data": ['views/mrp_repair_view.xml',
              ],
-    "installable": True
+    "installable": True,
+    "application": True
 }
