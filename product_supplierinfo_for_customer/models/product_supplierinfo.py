@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -22,9 +22,10 @@ from openerp import models, fields, api
 class ProductSupplierinfo(models.Model):
     _inherit = 'product.supplierinfo'
 
-    type = fields.Selection([('customer', 'Customer'),
-                             ('supplier', 'Supplier')], string='Type',
-                            default='supplier')
+    type = fields.Selection(
+        selection=[('customer', 'Customer'),
+                   ('supplier', 'Supplier')], string='Type',
+        default='supplier')
 
     @api.multi
     @api.onchange('type')
@@ -35,23 +36,16 @@ class ProductSupplierinfo(models.Model):
             return {'domain': {'name': [('customer', '=', True)]}}
         return {'domain': {'name': []}}
 
-    def _custumer_sequence_wa(self, vals, si_type, si_sequence):
-        if si_type == 'customer' and si_sequence < 100:
-            si_sequence += 100
-        vals['type'] = si_type
-        vals['sequence'] = si_sequence
-        return vals
-
-    @api.multi
-    def write(self, vals):
-        si_type = vals.get('type', self.type)
-        si_sequence = vals.get('sequence', self.sequence)
-        vals = self._custumer_sequence_wa(vals, si_type, si_sequence)
-        return super(ProductSupplierinfo, self).write(vals)
-
-    @api.model
-    def create(self, vals):
-        si_type = vals.get('type', 'supplier')
-        si_sequence = vals.get('sequence', 1)
-        vals = self._custumer_sequence_wa(vals, si_type, si_sequence)
-        return super(ProductSupplierinfo, self).create(vals)
+    def search(self, cr, uid, args, offset=0, limit=None, order=None,
+               context=None, count=False):
+        """Add search argument for field type if the context says so. This
+        should be in old API because context argument is not the last one.
+        """
+        if context is None:
+            context = {}
+        if not any(arg[0] == 'type' for arg in args):
+            args += [('type', '=',
+                      context.get('supplierinfo_type', 'supplier'))]
+        return super(ProductSupplierinfo, self).search(
+            cr, uid, args, offset=offset, limit=limit, order=order,
+            context=context, count=count)
